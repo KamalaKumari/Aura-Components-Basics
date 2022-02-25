@@ -1,1 +1,39 @@
+campingListItemController.js
 
+({
+	packItem : function(component, event, helper) {
+		let bClicked = event.getSource();         // the button
+        let a = component.get("v.item",true);
+        a.Packed__c = true;
+        component.set("v.item",a); 
+        let btnClicked=event.getSource();  // button
+        btnClicked.set("v.disabled",true); //set to disabled
+        
+        
+     }
+})
+
+campingListItem.cmp
+
+<aura:component >
+	<aura:attribute name="item" type="Camping_Item__c" required="true"/>
+    <p>Name:
+        <lightning:formattedNumber value="{!v.Item.Name}"/>
+    </p>
+    <p>Price:
+        <lightning:formattedNumber value="{!v.Item.Price__c}" style="currency"/>
+    </p>
+    <p>Quantity:
+   		 <lightning:formattedNumber value="{!v.Item.Quantity__c}" styles="decimal"/>
+    </p>
+    <p>Packed?:
+   		 <lightning:input type="toggle" checked="{!v.Item.Packed__c}"/>
+    </p>
+    <p><lightning:button label="Packed!" onclick="{!c.packItem }"/></p>
+</aura:component>
+
+App:
+
+<aura:application >
+	    <c:campingListItem/>
+</aura:application>
